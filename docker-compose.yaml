@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  kafka:
+    image: ${KAFKA_IMAGE}
+    restart: always
+    ports:
+      - "9092:9092"
+    build:
+      context: ./
+      dockerfile: dockerfiles/dockerfile.kafka
+      args: 
+        HOST_IP: localhost
+    env_file:
+      - .env

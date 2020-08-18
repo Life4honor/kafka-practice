@@ -1,0 +1,11 @@
+FROM ubuntu:20.04
+
+RUN apt-get update && apt-get install -y curl openjdk-8-jdk
+
+ADD ./dist/kafka_2.13-2.6.0.tgz /root
+
+WORKDIR /root/kafka_2.13-2.6.0
+
+ARG HOST_IP=
+RUN cat ./config/server.properties | sed -e 's/#listeners/listeners/' -e 's/#advertised/advertised/' -e "s/your.host.name/${HOST_IP}/" | tee ./config/server.properties > /dev/null
+
